@@ -1,5 +1,7 @@
 export interface ISubtask {
   title: string;
+  completed: boolean;
+  dateBy: number;
 }
 
 export interface ITask {

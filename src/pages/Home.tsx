@@ -3,7 +3,7 @@ import React from 'react';
 import { ITask } from '../types/task';
 
 import CreateTaskPanel from '../component/CreateTaskPanel';
-import Task from '../component/Task';
+import Task from '../component/Task/Task';
 import TasksList from '../component/TasksList';
 import { useTypedSelector } from '../redux/hooks/useTypedSelector';
 

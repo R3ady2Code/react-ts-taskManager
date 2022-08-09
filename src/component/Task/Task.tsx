@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Button from './ui/Button';
+import Button from '../ui/Button';
 
-import { ITask } from '../types/task';
+import { ITask } from '../../types/task';
 import TaskModal from './TaskModal';
-import { useActions } from '../redux/hooks/useActions';
+import { useActions } from '../../redux/hooks/useActions';
 
 const Task: React.FC<ITask> = (task) => {
   const { removeTask, completeTask } = useActions();
