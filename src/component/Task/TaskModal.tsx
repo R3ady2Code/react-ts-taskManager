@@ -88,7 +88,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
             <>
               <span className={spanStyle}>Deadline:</span>
               <p className="col-start-2 col-end-6">
-                {new Date(task.deadline).toISOString().split('.')[0].replace('T', ' ')}
+                {task.deadline.date.toISOString().split('.')[0].replace('T', ' ')}
               </p>
             </>
           )}

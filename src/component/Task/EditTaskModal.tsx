@@ -46,7 +46,10 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
     const deadlineDate = new Date(newDeadline.date.toString() + 'T' + newDeadline.time.toString());
     setNewTaskValue({
       ...newTaskValue,
-      deadline: deadlineDate.valueOf(),
+      deadline: {
+        value: deadlineDate.valueOf(),
+        date: deadlineDate,
+      },
     });
   }, [newDeadline]);
 
