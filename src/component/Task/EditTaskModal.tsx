@@ -23,6 +23,7 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
 }) => {
   const [newTaskValue, setNewTaskValue] = React.useState<ITask>({ ...task });
 
+  //добавление подзадач
   const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
     title: '',
     completed: false,
@@ -30,17 +31,35 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
   });
   const [newSubtasks, setNewSubtasks] = React.useState<ISubtask[]>(task.subtasks || []);
 
+  const addSubtask = (subtask: ISubtask) => {
+    setNewSubtasks([...newSubtasks, subtask]);
+    setNewSubtask({ title: '', completed: false, dateBy: 0 });
+  };
+
+  React.useEffect(() => {
+    setNewTaskValue({ ...newTaskValue, subtasks: newSubtasks });
+  }, [newSubtasks]);
+
+  //добавление дэдлайна
+  const [newDeadline, setNewDeadline] = React.useState({ date: '', time: '' });
+  React.useEffect(() => {
+    const deadlineDate = new Date(newDeadline.date.toString() + 'T' + newDeadline.time.toString());
+    setNewTaskValue({
+      ...newTaskValue,
+      deadline: deadlineDate.valueOf(),
+    });
+  }, [newDeadline]);
+
+  //сохранение изменений в таске
   const { updateTask } = useActions();
   const onClickToSave = () => {
     updateTask(newTaskValue);
     setEditMode(false);
   };
 
-  const addSubtasks = (subtask: ISubtask) => {
-    setNewSubtasks([...newSubtasks, subtask]);
-    setNewTaskValue({ ...newTaskValue, subtasks: newSubtasks });
-    setNewSubtask({ title: '', completed: false, dateBy: 0 });
-  };
+  function ucFirst(str: string) {
+    return str[0].toUpperCase() + str.slice(1);
+  }
 
   return (
     <div className="fixed w-full h-full bg-black/10 top-0 left-0" onClick={closeModal}>
@@ -74,11 +93,9 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
 
           <select
             className="border rounded border-gray-400 py-2 px-3 w-max"
-            value={newTaskValue.completed ? 'Completed' : 'Active'}
-            onChange={() =>
-              setNewTaskValue({ ...newTaskValue, completed: !newTaskValue.completed })
-            }>
-            <option>Active</option>
+            value={ucFirst(newTaskValue.status)}
+            onChange={(e) => setNewTaskValue({ ...newTaskValue, status: e.target.value })}>
+            <option>{task.status === 'overdue' ? 'Overdue' : 'Active'}</option>
             <option>Completed</option>
           </select>
 
@@ -100,12 +117,14 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
           <input
             type="date"
             className="col-start-2 px-2 py-1 rounded"
-            value={newTaskValue.deadline}
+            value={newDeadline.date}
+            onChange={(e) => setNewDeadline({ ...newDeadline, date: e.target.value })}
           />
           <input
             type="time"
             className="col-start-3 px-2 py-1 ml-4 rounded"
-            value={newTaskValue.deadline}
+            value={newDeadline.time}
+            onChange={(e) => setNewDeadline({ ...newDeadline, time: e.target.value })}
           />
 
           <span className={spanStyle}>Subtasks:</span>
@@ -115,15 +134,18 @@ const EditTaskModal: React.FC<TaskModalProps> = ({
             placeholder="Text subtask..."
             value={newSubtask.title}
             onChange={(e) => setNewSubtask({ ...newSubtask, title: e.target.value })}
+            onKeyDown={(e) =>
+              e.key === 'Enter' && addSubtask({ ...newSubtask, dateBy: Date.now() })
+            }
           />
           <p
             className="text-3xl font-black cursor-pointer pl-4 relative"
-            onClick={() => addSubtasks({ ...newSubtask, dateBy: Date.now() })}>
+            onClick={() => addSubtask({ ...newSubtask, dateBy: Date.now() })}>
             <span className="absolute bottom-1">+</span>
           </p>
           <div className="col-start-1 col-end-6">
             {newSubtasks?.map((subtask) => (
-              <Subtask {...subtask} key={subtask.dateBy} />
+              <Subtask {...subtask} key={subtask.dateBy} isEdit />
             ))}
           </div>
         </div>

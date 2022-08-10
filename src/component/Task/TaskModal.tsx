@@ -21,6 +21,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
     setEditMode(!editMode);
   };
 
+  function ucFirst(str: string) {
+    return str[0].toUpperCase() + str.slice(1);
+  }
+
   if (editMode)
     return (
       <EditTaskModal
@@ -61,8 +65,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
 
         <div className="grid grid-cols-5 gap-y-3 text-lg 	">
           <span className={spanStyle}>Status:</span>
-          <p className={`${task.completed && 'text-green-700'}`}>
-            {task.completed ? 'Completed' : 'Active'}
+          <p
+            className={`${task.status === 'completed' && 'text-green-700'} ${
+              task.status === 'overdue' && 'text-red-700'
+            }`}>
+            {ucFirst(task.status)}
           </p>
 
           <span className={spanStyle}>Created date:</span>
@@ -73,7 +80,16 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
           {task.description && (
             <>
               <span className={spanStyle}>Description:</span>
-              <p>{task.description}</p>
+              <p className="col-start-2 col-end-6">{task.description}</p>
+            </>
+          )}
+
+          {task.deadline && (
+            <>
+              <span className={spanStyle}>Deadline:</span>
+              <p className="col-start-2 col-end-6">
+                {new Date(task.deadline).toISOString().split('.')[0].replace('T', ' ')}
+              </p>
             </>
           )}
 

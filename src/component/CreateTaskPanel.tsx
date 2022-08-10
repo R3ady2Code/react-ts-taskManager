@@ -16,7 +16,7 @@ const CreateTaskPanel: React.FC = () => {
       const newTask = {
         title: newTaskTitle.trim(),
         dateBy: Date.now(),
-        completed: false,
+        status: 'active',
       };
       createTask(newTask);
       setNewTaskTitle('');

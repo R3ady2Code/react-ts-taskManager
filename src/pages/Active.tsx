@@ -10,10 +10,10 @@ const Active = () => {
 
   return (
     <TasksList>
-      {!tasks.filter((t) => !t.completed).length && (
+      {!tasks.filter((t) => t.status === 'active').length && (
         <p className="text-center font-bold text-2xl">You haven't got any active tasks</p>
       )}
-      {tasks?.map((task) => !task.completed && <Task {...task} key={task.dateBy} />)}
+      {tasks?.map((task) => task.status === 'active' && <Task {...task} key={task.dateBy} />)}
     </TasksList>
   );
 };

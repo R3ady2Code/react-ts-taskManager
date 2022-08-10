@@ -17,7 +17,7 @@ export const taskSlice = createSlice({
     completeTask(state, action: PayloadAction<ITask>) {
       return state.map((item) =>
         item.dateBy === action.payload.dateBy
-          ? { ...item, completed: !item.completed }
+          ? { ...item, status: item.status !== 'completed' ? 'completed' : 'active' }
           : { ...item },
       );
     },
