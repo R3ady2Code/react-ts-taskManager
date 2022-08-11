@@ -1,4 +1,6 @@
 import React from 'react';
+import useTimeout from '../../hooks/useTimeout';
+import moment from 'moment';
 
 import { ITask, ISubtask } from '../../types/task';
 import { useActions } from '../../redux/hooks/useActions';
@@ -18,9 +20,19 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
 
   const [newTaskValue, setNewTaskValue] = React.useState<ITask>({ ...task });
 
-  const timeLeft =
-    new Date(task.deadline?.date + 'T' + task.deadline?.time).valueOf() -
-    new Date(task.dateBy).valueOf();
+  const deadlineDate = new Date(task.deadline?.date + 'T' + task.deadline?.time);
+
+  const timeLeft = deadlineDate.valueOf() - new Date(task.dateBy).valueOf();
+
+  useTimeout(
+    () => {
+      if (task.deadline && task.status === 'active') {
+        alert(`Задача "${task.title}" просрочена!`);
+        setNewTaskValue({ ...newTaskValue, status: 'overdue' });
+      }
+    },
+    task.status === 'completed' ? null : timeLeft,
+  );
 
   //добавление подзадач
   const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
@@ -104,7 +116,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
 
           <span className={spanStyle}>Created date:</span>
           <p className="col-start-2 col-end-5">
-            {new Date(task.dateBy).toISOString().split('.')[0].replace('T', ' ')}
+            {moment(task.dateBy).format('ddd DD-MMM-YYYY, HH:mm')}
           </p>
 
           <span className={spanStyle}>Description:</span>
