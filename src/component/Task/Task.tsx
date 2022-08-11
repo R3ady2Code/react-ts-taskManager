@@ -29,7 +29,7 @@ const Task: React.FC<ITask> = (task) => {
 
   React.useEffect(() => {
     if (task.deadline) {
-      if (task.deadline.value - task.dateBy < 0) {
+      if (task.deadline.valueOf() < task.dateBy) {
         const newStatusTask = {
           ...task,
           status: 'overdue',

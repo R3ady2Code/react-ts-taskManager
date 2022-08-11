@@ -11,5 +11,8 @@ export interface ITask {
   status: string;
   description?: string;
   subtasks?: ISubtask[];
-  deadline?: { value: number; date: Date };
+  deadline?: {
+    date?: string;
+    time?: string;
+  };
 }
