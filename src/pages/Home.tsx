@@ -17,9 +17,6 @@ const Home = () => {
 
   function dragOverHandler(e: any) {
     e.preventDefault();
-  }
-
-  function dragLeaveHandler(e: any) {
     removeTaskFromBox({ task: currentTask, boxId: currentBox.id });
   }
 
@@ -50,7 +47,6 @@ const Home = () => {
         dragStartHandler,
         dropHandler,
         dragOverHandler,
-        dragLeaveHandler,
         dropBoxHandler,
       }}>
       <div

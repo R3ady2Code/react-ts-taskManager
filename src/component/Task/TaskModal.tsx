@@ -62,7 +62,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
   return (
     <div className="fixed w-full h-full bg-black/10 top-0 left-0" onClick={closeModal}>
       <div
-        className="fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4 "
+        className="taskModal fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4 "
         onClick={(e) => {
           e.stopPropagation();
         }}>
