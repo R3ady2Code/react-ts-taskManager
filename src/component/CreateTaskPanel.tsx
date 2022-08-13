@@ -4,7 +4,7 @@ import { useActions } from '../redux/hooks/useActions';
 import Button from './ui/Button';
 
 const CreateTaskPanel: React.FC = () => {
-  const { createTask } = useActions();
+  const { createTask, addTaskToBox } = useActions();
   const [newTaskTitle, setNewTaskTitle] = React.useState('');
 
   const clickCreateTask = (e?: React.MouseEvent<HTMLElement>) => {
@@ -23,6 +23,7 @@ const CreateTaskPanel: React.FC = () => {
         },
       };
       createTask(newTask);
+      addTaskToBox({ task: newTask, boxId: 1 });
       setNewTaskTitle('');
     }
   };

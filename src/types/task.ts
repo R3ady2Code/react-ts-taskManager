@@ -16,3 +16,9 @@ export interface ITask {
     time?: string;
   };
 }
+
+export interface IBox {
+  title: string;
+  id: number;
+  tasks?: ITask[];
+}

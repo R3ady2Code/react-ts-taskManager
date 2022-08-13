@@ -1,13 +1,22 @@
 import React from 'react';
+import { dndContext } from '../../dndContext';
 
 import Button from '../ui/Button';
 
-import { ITask } from '../../types/task';
+import { ITask, IBox } from '../../types/task';
 import TaskModal from './TaskModal';
 import { useActions } from '../../redux/hooks/useActions';
 
-const Task: React.FC<ITask> = (task) => {
+interface Props {
+  task: ITask;
+  box?: IBox;
+}
+
+const Task: React.FC<Props> = ({ task, box }) => {
   const { removeTask, completeTask, updateTask } = useActions();
+
+  const dndCtx = React.useContext(dndContext);
+
   const [visibleModal, setVisibleModal] = React.useState(false);
 
   const onClickDelete = () => {
@@ -42,12 +51,18 @@ const Task: React.FC<ITask> = (task) => {
   return (
     <>
       <div
-        className="border py-2 px-4 rounded flex justify-between items-center mb-2 hover:bg-slate-300 transition-all cursor-pointer"
+        draggable={true}
+        onDragOver={(e) => dndCtx.dragOverHandler(e)}
+        onDragLeave={(e) => dndCtx.dragLeaveHandler(e)}
+        onDragStart={(e) => dndCtx.dragStartHandler(e, box, task)}
+        onDragEnd={(e) => dndCtx.dragEndHandler(e)}
+        onDrop={(e) => dndCtx.dropHandler(e, box, task)}
+        className="task py-2 px-4 rounded flex justify-between items-center mb-2 bg-slate-300 hover:bg-slate-400 transition-all cursor-grab"
         onClick={openModal}>
         <h3
           className={`text-xl ${task.status === 'completed' && 'text-green-600'} ${
             task.status === 'overdue' && 'text-red-600'
-          }`}>
+          } truncate`}>
           {task.title}
         </h3>
         <div className="flex items-center">

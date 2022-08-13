@@ -13,7 +13,7 @@ const Completed = () => {
       {!tasks.filter((t) => t.status === 'completed').length && (
         <p className="text-center font-bold text-2xl">You haven't got any completed tasks</p>
       )}
-      {tasks?.map((task) => task.status === 'completed' && <Task {...task} key={task.dateBy} />)}
+      {tasks?.map((task) => task.status === 'completed' && <Task task={task} key={task.dateBy} />)}
     </TasksList>
   );
 };
