@@ -19,31 +19,26 @@ const Home = () => {
     e.preventDefault();
   }
 
-  function dragLeaveHandler(e: any) {}
+  function dragLeaveHandler(e: any) {
+    removeTaskFromBox({ task: currentTask, boxId: currentBox.id });
+  }
 
   function dragStartHandler(e: any, box: IBox, task: ITask) {
     setCurrentBox(box);
     setCurrentTask(task);
   }
-  function dragEndHandler(e: any) {}
 
-  function dropHandler(e: any, box: IBox, task: ITask) {
+  function dropHandler(e: any, box: IBox) {
     e.preventDefault();
-    removeTaskFromBox({ task: currentTask, boxId: currentBox.id });
-    addTaskToBox({ task: currentTask, boxId: box.id });
   }
 
   function dropBoxHandler(e: any, box: IBox) {
-    if (!box.tasks?.length) {
-      addTaskToBox({ task: currentTask, boxId: box.id });
-      removeTaskFromBox({ task: currentTask, boxId: currentBox.id });
-    }
+    addTaskToBox({ task: currentTask, boxId: box.id });
   }
 
   return (
     <dndContext.Provider
       value={{
-        dragEndHandler,
         dragStartHandler,
         dropHandler,
         dragOverHandler,

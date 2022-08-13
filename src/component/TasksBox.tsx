@@ -2,7 +2,6 @@ import React from 'react';
 import { dndContext } from '../dndContext';
 
 import { ITask, IBox } from '../types/task';
-import { useActions } from '../redux/hooks/useActions';
 
 import Task from '../component/Task/Task';
 import TasksList from '../component/TasksList';
