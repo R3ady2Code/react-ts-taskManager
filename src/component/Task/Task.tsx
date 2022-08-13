@@ -55,8 +55,8 @@ const Task: React.FC<Props> = ({ task, box }) => {
         onDragOver={(e) => dndCtx.dragOverHandler(e)}
         onDragLeave={(e) => dndCtx.dragLeaveHandler(e)}
         onDragStart={(e) => dndCtx.dragStartHandler(e, box, task)}
-        onDrop={(e) => dndCtx.dropHandler(e, box, task)}
-        className="task py-2 px-4 rounded flex justify-between items-center mb-2 bg-slate-300 hover:bg-slate-400 transition-all cursor-grab"
+        onDrop={(e) => dndCtx.dropHandler(e)}
+        className="task taskBox py-2 px-4 rounded flex justify-between items-center mb-2 bg-slate-300 hover:bg-slate-400 transition-all cursor-grab"
         onClick={openModal}>
         <h3
           className={`text-xl ${task.status === 'completed' && 'text-green-600'} ${

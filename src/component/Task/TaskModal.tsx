@@ -35,11 +35,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
   );
 
   //добавление подзадач
-  const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
-    title: '',
-    completed: false,
-    dateBy: 0,
-  });
+  // const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
+  //   title: '',
+  //   completed: false,
+  //   dateBy: 0,
+  // });
   // const [newSubtasks, setNewSubtasks] = React.useState<ISubtask[]>(task.subtasks || []);
 
   // const addSubtask = (subtask: ISubtask) => {
@@ -50,20 +50,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
   // React.useEffect(() => {
   //   setNewTaskValue({ ...newTaskValue, subtasks: newSubtasks });
   // }, [newSubtasks]);
-
-  //добавление дэдлайна
-  // const [newDeadline, setNewDeadline] = React.useState({ date: '', time: '' });
-  // React.useEffect(() => {
-  //   if (newDeadline.date !== '' && newDeadline.time !== '') {
-  //     const deadlineDate = new Date(
-  //       newDeadline.date.toString() + 'T' + newDeadline.time.toString(),
-  //     );
-  //     setNewTaskValue({
-  //       ...newTaskValue,
-  //       deadline: deadlineDate,
-  //     });
-  //   }
-  // }, [newDeadline]);
 
   React.useEffect(() => {
     updateTask(newTaskValue);

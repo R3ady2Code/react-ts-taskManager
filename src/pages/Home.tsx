@@ -28,12 +28,20 @@ const Home = () => {
     setCurrentTask(task);
   }
 
-  function dropHandler(e: any, box: IBox) {
+  function dropHandler(e: any) {
     e.preventDefault();
   }
 
   function dropBoxHandler(e: any, box: IBox) {
     addTaskToBox({ task: currentTask, boxId: box.id });
+  }
+
+  const overBox = React.useRef<any>(null);
+
+  function dropOverBox(e: any, place: any) {
+    if (!e.target.classList.contains('taskBox')) {
+      addTaskToBox({ task: currentTask, boxId: currentBox.id });
+    }
   }
 
   return (
@@ -45,11 +53,16 @@ const Home = () => {
         dragLeaveHandler,
         dropBoxHandler,
       }}>
-      <CreateTaskPanel />
-      <div className="flex justify-center items-start">
-        {boxes.map((box) => (
-          <TasksBox key={box.id} {...box} />
-        ))}
+      <div
+        ref={overBox}
+        onDragOver={(e) => dragOverHandler(e)}
+        onDrop={(e) => dropOverBox(e, overBox)}>
+        <CreateTaskPanel />
+        <div className="flex justify-center items-start">
+          {boxes.map((box) => (
+            <TasksBox key={box.id} {...box} />
+          ))}
+        </div>
       </div>
     </dndContext.Provider>
   );

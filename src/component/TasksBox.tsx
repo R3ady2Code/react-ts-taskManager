@@ -13,10 +13,12 @@ const TasksBox: React.FC<IBox> = (box) => {
     <div
       onDragOver={(e) => dragOverHandler(e)}
       onDrop={(e) => dropBoxHandler(e, box)}
-      className="bg-slate-200 shadow-lg w-1/5 min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center">
-      <h3 className="font-bold text-2xl">{box.title}</h3>
+      className="taskBox bg-slate-200 shadow-lg w-1/5 min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center">
+      <h3 className="taskBox font-bold text-2xl">{box.title}</h3>
       <TasksList>
-        {!box.tasks?.length && <p className="text-center text-lg">You haven't got any tasks</p>}
+        {!box.tasks?.length && (
+          <p className="taskBox text-center text-lg">You haven't got any tasks</p>
+        )}
         {box.tasks?.map((task: ITask) => (
           <Task box={box} task={task} key={task.dateBy} />
         ))}
