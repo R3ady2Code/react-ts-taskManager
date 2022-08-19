@@ -1,12 +1,13 @@
 import React from 'react';
-import { dndContext } from '../../dndContext';
 import { Transition } from 'react-transition-group';
 
-import Button from '../ui/Button';
-
 import { ITask, IBox } from '../../types/types';
-import TaskModal from './TaskModal';
+
+import { dndContext } from '../../dndContext';
 import { useActions } from '../../redux/hooks/useActions';
+
+import Button from '../ui/Button';
+import TaskModal from './TaskModal';
 
 interface Props {
   task: ITask;
@@ -38,6 +39,7 @@ const Task: React.FC<Props> = ({ task, box }) => {
     setVisibleModal(true);
   };
 
+  //измененмие статуса задачи в "просроченна"
   React.useEffect(() => {
     if (task.deadline) {
       if (task.deadline.valueOf() < task.dateBy) {
@@ -70,7 +72,7 @@ const Task: React.FC<Props> = ({ task, box }) => {
             type="checkbox"
             className="mr-2 w-4 h-4"
             checked={task.status === 'completed'}
-            onClick={(e) => onChangeComplete(e)}
+            onChange={(e) => onChangeComplete(e)}
           />
           <Button
             title="Delete"

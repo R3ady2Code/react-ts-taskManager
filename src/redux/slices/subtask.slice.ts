@@ -12,7 +12,12 @@ export const subtaskSlice = createSlice({
       state.push(action.payload);
     },
     deleteSubtask(state, action: PayloadAction<ISubtask>) {
-      state.filter((stask) => stask.id !== action.payload.id);
+      return state.filter((stask) => stask.id !== action.payload.id);
+    },
+    completeSubtask(state, action: PayloadAction<ISubtask>) {
+      return state.map((item) =>
+        item.id === action.payload.id ? { ...item, completed: !item.completed } : { ...item },
+      );
     },
   },
 });

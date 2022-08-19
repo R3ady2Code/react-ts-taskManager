@@ -16,7 +16,7 @@ export const boxSlice = createSlice({
       state.push(action.payload);
     },
     deleteBox(state, action: PayloadAction<IBox>) {
-      state.filter((box) => box.id !== action.payload.id);
+      return state.filter((box) => box.id !== action.payload.id);
     },
   },
 });

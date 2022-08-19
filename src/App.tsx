@@ -1,9 +1,10 @@
 import React from 'react';
-import { dndContext } from './dndContext';
-import { useActions } from './redux/hooks/useActions';
 
 import { ITask, IBox } from './types/types';
+
+import { useActions } from './redux/hooks/useActions';
 import { useTypedSelector } from './redux/hooks/useTypedSelector';
+import { dndContext } from './dndContext';
 
 import CreateTaskPanel from './component/CreateTaskPanel';
 import TasksBox from './component/Box/Box';
@@ -16,6 +17,7 @@ const App = () => {
   const { boxes } = useTypedSelector((state) => state);
   const { updateTask } = useActions();
 
+  // драг н дроп логика
   const [currentBox, setCurrentBox] = React.useState<any>(null);
   const [currentTask, setCurrentTask] = React.useState<any>(null);
 
@@ -41,12 +43,12 @@ const App = () => {
 
   function dropOverBox(e: any, place: any) {
     if (!e.target.classList.contains('taskBox')) {
-      // addTaskToBox({ task: currentTask, boxId: currentBox.id });
+      updateTask({ ...currentTask, boxId: currentBox.id });
     }
   }
 
+  //добавление новго бокса
   const [addBoxMode, setAddBoxMode] = React.useState(false);
-
   const onClickToPlusBtn = () => {
     setAddBoxMode(true);
   };

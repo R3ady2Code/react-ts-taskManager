@@ -1,8 +1,10 @@
 import React from 'react';
-import useTimeout from '../../hooks/useTimeout';
 import moment from 'moment';
+import useTimeout from '../../hooks/useTimeout';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { ITask, ISubtask } from '../../types/types';
+
 import { useActions } from '../../redux/hooks/useActions';
 import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
 
@@ -36,34 +38,33 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
     task.status === 'completed' ? null : timeLeft,
   );
 
+  React.useEffect(() => {
+    updateTask(newTaskValue);
+  }, [newTaskValue]);
+
   //добавление подзадач
   const subtasks = useTypedSelector((state) =>
     state.subtasks.filter((st) => st.taskId === task.dateBy),
   );
 
-  const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
+  const [newSubtask, setNewSubtask] = React.useState<any>({
     title: '',
     completed: false,
-    id: 0,
     taskId: task.dateBy,
+    id: Date.now(),
   });
 
   const addSubtask = () => {
-    setNewSubtask({ ...newSubtask, id: Date.now() });
     createSubtask(newSubtask);
-    setNewSubtask({ title: '', completed: false, id: 0, taskId: task.dateBy });
+    setNewSubtask({ title: '', completed: false, id: Date.now(), taskId: task.dateBy });
   };
-
-  React.useEffect(() => {
-    updateTask(newTaskValue);
-  }, [newTaskValue]);
 
   function ucFirst(str: string) {
     return str[0].toUpperCase() + str.slice(1);
   }
 
   return (
-    <div className="fixed w-full h-full bg-black/10 top-0 left-0" onClick={closeModal}>
+    <div className="fixed w-full h-full bg-black/10 top-0 left-0 z-10 " onClick={closeModal}>
       <div
         className={`taskModal ${transitionState} fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
         onClick={(e) => {
@@ -170,9 +171,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
             <span className="absolute bottom-1">+</span>
           </p>
           <div className="col-start-1 col-end-6">
-            {subtasks?.map((subtask) => (
-              <Subtask {...subtask} key={subtask.id} />
-            ))}
+            <TransitionGroup>
+              {subtasks?.map((subtask) => (
+                <CSSTransition key={subtask.id} timeout={300} classNames="task">
+                  <Subtask {...subtask} key={subtask.id} />
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
           </div>
         </div>
       </div>
