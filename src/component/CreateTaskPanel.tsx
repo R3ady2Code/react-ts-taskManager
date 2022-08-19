@@ -32,9 +32,9 @@ const CreateTaskPanel: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto w-3/5 mt-5 mb-5 flex items-center">
+    <div className="mx-auto w-5/6 lg:w-3/5 mt-5 mb-5 flex flex-col lg:flex-row lg:items-center">
       <input
-        className="border rounded py-3 px-5 text-2xl mr-3 w-5/6"
+        className="border rounded py-3 px-5 text-2xl mr-3 mb-2 lg:mb-0 w-full lg:w-5/6"
         type="text"
         placeholder="Type your task..."
         value={newTaskTitle}

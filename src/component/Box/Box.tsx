@@ -19,7 +19,7 @@ const TasksBox: React.FC<IBox> = (box) => {
     <div
       onDragOver={(e) => dragOverHandler(e)}
       onDrop={(e) => dropBoxHandler(e, box)}
-      className="taskBox bg-slate-200 shadow-lg min-w-[20vw] max-w-[22vw] w-1/5 min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center relative">
+      className="taskBox bg-slate-200 shadow-lg w-[90vw] md:w-[45vw] lg:w-[22vw] min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center relative">
       <h3 className="taskBox font-bold text-2xl max-w-full truncate">{box.title}</h3>
       {!tasks?.length && (
         <p className="taskBox text-center text-lg mt-4">You haven't got any tasks</p>

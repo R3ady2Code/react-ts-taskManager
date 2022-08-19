@@ -66,12 +66,12 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
   return (
     <div className="fixed w-full h-full bg-black/10 top-0 left-0 z-10 " onClick={closeModal}>
       <div
-        className={`taskModal ${transitionState} fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
+        className={`taskModal ${transitionState} fixed h-screen max-h-screen w-5/6 lg:w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
         onClick={(e) => {
           e.stopPropagation();
         }}>
         <div className="flex items-center justify-between mb-5">
-          <h2 className="font-bold text-4xl col-start-1 col-end-5">{task.title}</h2>
+          <h2 className="font-bold text-4xl col-start-1 col-end-5 truncate">{task.title}</h2>
           <div className="col-end-12">
             <Button
               title={
