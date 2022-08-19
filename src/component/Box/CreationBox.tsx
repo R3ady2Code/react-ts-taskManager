@@ -27,7 +27,6 @@ const CreationBox: React.FC<Props> = ({ closeThis }) => {
     const newBox = {
       title,
       id: Date.now(),
-      tasks: [],
     };
     createBox(newBox);
     closeThis();

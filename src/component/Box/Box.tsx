@@ -6,7 +6,7 @@ import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
 import { ITask, IBox } from '../../types/types';
 
 import Task from '../Task/Task';
-import TasksList from '../TasksList';
+import TasksList from '../Lists/TasksList';
 
 const TasksBox: React.FC<IBox> = (box) => {
   const tasks = useTypedSelector((state) => state.tasks.filter((task) => task.boxId === box.id));

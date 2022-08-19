@@ -4,20 +4,21 @@ import moment from 'moment';
 
 import { ITask, ISubtask } from '../../types/types';
 import { useActions } from '../../redux/hooks/useActions';
+import { useTypedSelector } from '../../redux/hooks/useTypedSelector';
 
 import Button from '../ui/Button';
 import Subtask from '../Subtask';
 
 interface TaskModalProps {
   task: ITask;
-  removeTask: () => void;
+  removeTask: (e: Event) => void;
   closeModal: () => void;
   transitionState?: string;
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, transitionState }) => {
   const spanStyle = 'text-start text-gray-500 font-medium col-start-1	col-end-2';
-  const { updateTask, completeTask } = useActions();
+  const { updateTask, completeTask, createSubtask } = useActions();
 
   const [newTaskValue, setNewTaskValue] = React.useState<ITask>({ ...task });
 
@@ -36,21 +37,22 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
   );
 
   //добавление подзадач
-  // const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
-  //   title: '',
-  //   completed: false,
-  //   dateBy: 0,
-  // });
-  // const [newSubtasks, setNewSubtasks] = React.useState<ISubtask[]>(task.subtasks || []);
+  const subtasks = useTypedSelector((state) =>
+    state.subtasks.filter((st) => st.taskId === task.dateBy),
+  );
 
-  // const addSubtask = (subtask: ISubtask) => {
-  //   setNewSubtasks([...newSubtasks, subtask]);
-  //   setNewSubtask({ title: '', completed: false, dateBy: 0 });
-  // };
+  const [newSubtask, setNewSubtask] = React.useState<ISubtask>({
+    title: '',
+    completed: false,
+    id: 0,
+    taskId: task.dateBy,
+  });
 
-  // React.useEffect(() => {
-  //   setNewTaskValue({ ...newTaskValue, subtasks: newSubtasks });
-  // }, [newSubtasks]);
+  const addSubtask = () => {
+    setNewSubtask({ ...newSubtask, id: Date.now() });
+    createSubtask(newSubtask);
+    setNewSubtask({ title: '', completed: false, id: 0, taskId: task.dateBy });
+  };
 
   React.useEffect(() => {
     updateTask(newTaskValue);
@@ -155,27 +157,23 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
             </>
           )}
 
-          {/* <span className={spanStyle}>Subtasks:</span>
+          <span className={spanStyle}>Subtasks:</span>
           <input
             type="text"
             className="col-start-2 col-end-5 px-2 py-1 rounded self-start"
             placeholder="Text subtask..."
             value={newSubtask.title}
             onChange={(e) => setNewSubtask({ ...newSubtask, title: e.target.value })}
-            onKeyDown={(e) =>
-              e.key === 'Enter' && addSubtask({ ...newSubtask, dateBy: Date.now() })
-            }
+            onKeyDown={(e) => e.key === 'Enter' && addSubtask()}
           />
-          <p
-            className="text-3xl font-black cursor-pointer pl-4 relative"
-            onClick={() => addSubtask({ ...newSubtask, dateBy: Date.now() })}>
+          <p className="text-3xl font-black cursor-pointer pl-4 relative" onClick={addSubtask}>
             <span className="absolute bottom-1">+</span>
           </p>
           <div className="col-start-1 col-end-6">
-            {newSubtasks?.map((subtask) => (
-              <Subtask {...subtask} key={subtask.dateBy} isEdit />
+            {subtasks?.map((subtask) => (
+              <Subtask {...subtask} key={subtask.id} />
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import CreateTaskPanel from './component/CreateTaskPanel';
 import TasksBox from './component/Box/Box';
 import { CreateBoxBtn } from './component/ui/CreateBoxBtn';
 import CreationBox from './component/Box/CreationBox';
-import BoxesList from './component/BoxesList';
+import BoxesList from './component/Lists/BoxesList';
 import Header from './component/Header';
 
 const App = () => {

@@ -20,7 +20,8 @@ const Task: React.FC<Props> = ({ task, box }) => {
 
   const [visibleModal, setVisibleModal] = React.useState(false);
 
-  const onClickDelete = () => {
+  const onClickDelete = (e: Event) => {
+    e.stopPropagation();
     removeTask({ dateBy: task.dateBy });
   };
 
@@ -71,7 +72,12 @@ const Task: React.FC<Props> = ({ task, box }) => {
             checked={task.status === 'completed'}
             onClick={(e) => onChangeComplete(e)}
           />
-          <Button title="Delete" color="bg-red-500" size="text-sm" onClick={onClickDelete} />
+          <Button
+            title="Delete"
+            color="bg-red-500"
+            size="text-sm"
+            onClick={(e) => onClickDelete(e)}
+          />
         </div>
       </div>
       <Transition in={visibleModal} timeout={300} unmountOnExit mountOnEnter>
@@ -79,7 +85,7 @@ const Task: React.FC<Props> = ({ task, box }) => {
           <TaskModal
             transitionState={state}
             closeModal={closeModal}
-            removeTask={onClickDelete}
+            removeTask={(e) => onClickDelete(e)}
             task={task}
           />
         )}
