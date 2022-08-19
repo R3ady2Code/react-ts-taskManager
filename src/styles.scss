@@ -3,7 +3,12 @@
 @tailwind utilities;
 
 .taskModal {
-  animation: show-task-modal 0.3s ease-in-out forwards;
+  &.entering {
+    animation: show-task-modal 0.3s forwards;
+  }
+  &.exiting {
+    animation: show-task-modal 0.3s reverse;
+  }
 }
 
 @keyframes show-task-modal {
@@ -14,5 +19,24 @@
   100% {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+.task-exit-active {
+  animation: show-task 0.3s reverse;
+}
+
+.task-enter-active {
+  animation: show-task 0.3s forwards;
+}
+
+@keyframes show-task {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

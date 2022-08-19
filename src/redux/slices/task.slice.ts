@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ITask } from '../../types/task';
+import { ITask } from '../../types/types';
 
 const initialState: ITask[] = [];
 

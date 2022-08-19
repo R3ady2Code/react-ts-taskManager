@@ -2,7 +2,7 @@ import React from 'react';
 import useTimeout from '../../hooks/useTimeout';
 import moment from 'moment';
 
-import { ITask, ISubtask } from '../../types/task';
+import { ITask, ISubtask } from '../../types/types';
 import { useActions } from '../../redux/hooks/useActions';
 
 import Button from '../ui/Button';
@@ -12,9 +12,10 @@ interface TaskModalProps {
   task: ITask;
   removeTask: () => void;
   closeModal: () => void;
+  transitionState?: string;
 }
 
-const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) => {
+const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, transitionState }) => {
   const spanStyle = 'text-start text-gray-500 font-medium col-start-1	col-end-2';
   const { updateTask, completeTask } = useActions();
 
@@ -27,7 +28,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
   useTimeout(
     () => {
       if (task.deadline && task.status === 'active') {
-        alert(`Задача "${task.title}" просрочена!`);
+        alert(`Task "${task.title}" was expired!`);
         setNewTaskValue({ ...newTaskValue, status: 'overdue' });
       }
     },
@@ -62,7 +63,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask }) =
   return (
     <div className="fixed w-full h-full bg-black/10 top-0 left-0" onClick={closeModal}>
       <div
-        className="taskModal fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4 "
+        className={`taskModal ${transitionState} fixed h-screen max-h-screen w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
         onClick={(e) => {
           e.stopPropagation();
         }}>

@@ -1,31 +1,33 @@
 import React from 'react';
 import { useActions } from '../redux/hooks/useActions';
+import { useTypedSelector } from '../redux/hooks/useTypedSelector';
 
 import Button from './ui/Button';
 
 const CreateTaskPanel: React.FC = () => {
-  const { createTask, addTaskToBox } = useActions();
+  const { boxes } = useTypedSelector((state) => state);
+  const { createTask } = useActions();
   const [newTaskTitle, setNewTaskTitle] = React.useState('');
 
   const clickCreateTask = (e?: React.MouseEvent<HTMLElement>) => {
     e?.preventDefault();
     if (!newTaskTitle.trim()) {
       alert('New task title is not available');
-      setNewTaskTitle('');
-    } else {
-      const newTask = {
-        title: newTaskTitle.trim(),
-        dateBy: Date.now(),
-        status: 'active',
-        deadline: {
-          date: '',
-          time: '',
-        },
-      };
-      createTask(newTask);
-      addTaskToBox({ task: newTask, boxId: 1 });
-      setNewTaskTitle('');
+      return setNewTaskTitle('');
     }
+    if (!boxes.length) {
+      return alert('First create a box');
+    }
+
+    const newTask = {
+      title: newTaskTitle.trim(),
+      dateBy: Date.now(),
+      status: 'active',
+      boxId: boxes[0].id,
+    };
+
+    createTask(newTask);
+    setNewTaskTitle('');
   };
 
   return (

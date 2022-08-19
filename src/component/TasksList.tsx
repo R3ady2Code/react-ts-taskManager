@@ -5,7 +5,7 @@ interface TasksListProps {
 }
 
 const TasksList: React.FC<TasksListProps> = ({ children }) => {
-  return <div className="taskBox container mx-auto max-w-2xl mt-5">{children}</div>;
+  return <ul className="taskBox container mx-auto max-w-2xl mt-5">{children}</ul>;
 };
 
 export default TasksList;

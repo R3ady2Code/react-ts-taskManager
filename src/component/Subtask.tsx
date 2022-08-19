@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from './ui/Button';
 
-import { ISubtask } from '../types/task';
+import { ISubtask } from '../types/types';
 
 const Task: React.FC<ISubtask> = (subtask) => {
   return (

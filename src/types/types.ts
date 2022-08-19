@@ -2,15 +2,15 @@ export interface ISubtask {
   title: string;
   completed: boolean;
   dateBy: number;
-  isEdit?: boolean;
+  taskId: number;
 }
 
 export interface ITask {
   title: string;
   dateBy: number;
   status: string;
+  boxId?: number;
   description?: string;
-  subtasks?: ISubtask[];
   deadline?: {
     date?: string;
     time?: string;
@@ -20,5 +20,4 @@ export interface ITask {
 export interface IBox {
   title: string;
   id: number;
-  tasks?: ITask[];
 }

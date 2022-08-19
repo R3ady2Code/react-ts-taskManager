@@ -1,9 +1,10 @@
 import React from 'react';
 import { dndContext } from '../../dndContext';
+import { Transition } from 'react-transition-group';
 
 import Button from '../ui/Button';
 
-import { ITask, IBox } from '../../types/task';
+import { ITask, IBox } from '../../types/types';
 import TaskModal from './TaskModal';
 import { useActions } from '../../redux/hooks/useActions';
 
@@ -64,12 +65,25 @@ const Task: React.FC<Props> = ({ task, box }) => {
           {task.title}
         </h3>
         <div className="flex items-center">
-          <input type="checkbox" className="mr-2 w-4 h-4" onClick={(e) => onChangeComplete(e)} />
+          <input
+            type="checkbox"
+            className="mr-2 w-4 h-4"
+            checked={task.status === 'completed'}
+            onClick={(e) => onChangeComplete(e)}
+          />
           <Button title="Delete" color="bg-red-500" size="text-sm" onClick={onClickDelete} />
         </div>
       </div>
-
-      {visibleModal && <TaskModal closeModal={closeModal} removeTask={onClickDelete} task={task} />}
+      <Transition in={visibleModal} timeout={300} unmountOnExit mountOnEnter>
+        {(state) => (
+          <TaskModal
+            transitionState={state}
+            closeModal={closeModal}
+            removeTask={onClickDelete}
+            task={task}
+          />
+        )}
+      </Transition>
     </>
   );
 };
