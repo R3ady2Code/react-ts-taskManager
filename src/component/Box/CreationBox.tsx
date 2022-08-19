@@ -35,7 +35,7 @@ const CreationBox: React.FC<Props> = ({ closeThis }) => {
   return (
     <div
       ref={rootEl}
-      className={`taskBox min-w-[20vw] bg-slate-200 shadow-lg w-1/5 min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center`}>
+      className={`taskBox bg-slate-200 shadow-lg w-[90vw] md:w-[45vw] lg:w-[22vw] min-h-[70vh] rounded-xl mx-3 p-4 flex flex-col items-center`}>
       <div className="flex items-center justify-between">
         <input
           className="taskBox font-bold text-xl w-[90%] p-2 rounded"
