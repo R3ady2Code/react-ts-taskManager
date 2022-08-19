@@ -55,6 +55,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
   });
 
   const addSubtask = () => {
+    if (!newSubtask.title) return alert('Please select a subtask title');
     createSubtask(newSubtask);
     setNewSubtask({ title: '', completed: false, id: Date.now(), taskId: task.dateBy });
   };
