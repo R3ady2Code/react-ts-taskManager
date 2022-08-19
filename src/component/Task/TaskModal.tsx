@@ -90,8 +90,15 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
               title="Delete"
               color="bg-red-500"
               className="self-end"
-              size="sm:text-xs md:text-lg"
+              size="sm:text-xs md:text-lg mb-2 md:mr-2 md:mb-[0px]"
               onClick={removeTask}
+            />
+            <Button
+              title="Close"
+              color="bg-blue-500"
+              className="self-end"
+              size="sm:text-xs md:text-lg"
+              onClick={closeModal}
             />
           </div>
         </div>
