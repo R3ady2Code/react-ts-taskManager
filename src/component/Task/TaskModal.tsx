@@ -66,36 +66,36 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
   return (
     <div className="fixed w-full h-full bg-black/10 top-0 left-0 z-10 " onClick={closeModal}>
       <div
-        className={`taskModal ${transitionState} fixed h-screen max-h-screen w-5/6 lg:w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
+        className={`taskModal ${transitionState} fixed h-screen max-h-screen w-full lg:w-1/2 bg-slate-200 bottom-0 right-0 py-6 px-4`}
         onClick={(e) => {
           e.stopPropagation();
         }}>
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-bold text-4xl col-start-1 col-end-5 truncate">{task.title}</h2>
-          <div className="col-end-12">
+          <div className="flex flex-col md:flex-row items-center lg:col-end-12">
             <Button
               title={
                 task.status === 'completed' ? 'This task has been completed' : 'To complete task'
               }
               color={task.status === 'completed' ? 'bg-green-600' : 'bg-slate-200'}
-              className={`self-end mr-2 border border-green-600 ${
+              className={`self-end md:mr-2 border border-green-600 ${
                 task.status === 'completed' ? 'text-white' : 'text-green-600'
               }`}
               disabled={task.status === 'completed'}
-              size="text-lg"
+              size="sm:text-xs md:text-lg mb-2 md:mb-[0px]"
               onClick={() => completeTask(task)}
             />
             <Button
               title="Delete"
               color="bg-red-500"
               className="self-end"
-              size="text-lg"
+              size="sm:text-xs md:text-lg"
               onClick={removeTask}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-y-3 text-lg 	">
+        <div className="flex flex-col lg:grid grid-cols-5 gap-y-3 text-lg ">
           <span className={spanStyle}>Status:</span>
           <p
             className={`col-start-2 col-end-5 ${task.status === 'completed' && 'text-green-600'} ${
@@ -135,7 +135,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
           />
           <input
             type="time"
-            className="col-start-3 px-2 py-1 ml-4 rounded"
+            className="col-start-3 px-2 py-1 lg:ml-4 rounded"
             value={newTaskValue.deadline?.time}
             onChange={(e) =>
               setNewTaskValue({
@@ -159,17 +159,20 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, closeModal, removeTask, tra
           )}
 
           <span className={spanStyle}>Subtasks:</span>
-          <input
-            type="text"
-            className="col-start-2 col-end-5 px-2 py-1 rounded self-start"
-            placeholder="Text subtask..."
-            value={newSubtask.title}
-            onChange={(e) => setNewSubtask({ ...newSubtask, title: e.target.value })}
-            onKeyDown={(e) => e.key === 'Enter' && addSubtask()}
-          />
-          <p className="text-3xl font-black cursor-pointer pl-4 relative" onClick={addSubtask}>
-            <span className="absolute bottom-1">+</span>
-          </p>
+          <div className="flex lg:col-start-2 lg:col-end-5">
+            <input
+              type="text"
+              className="px-2 py-1 rounded self-start"
+              placeholder="Text subtask..."
+              value={newSubtask.title}
+              onChange={(e) => setNewSubtask({ ...newSubtask, title: e.target.value })}
+              onKeyDown={(e) => e.key === 'Enter' && addSubtask()}
+            />
+            <p className="text-3xl font-black cursor-pointer pl-4 lg:relative" onClick={addSubtask}>
+              <span className="lg:absolute bottom-1">+</span>
+            </p>
+          </div>
+
           <div className="col-start-1 col-end-6">
             <TransitionGroup>
               {subtasks?.map((subtask) => (
